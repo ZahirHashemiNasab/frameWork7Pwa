@@ -1,4 +1,4 @@
-import * as React from 'react';
+import * as React from "react";
 import {
   App,
   Panel,
@@ -17,18 +17,17 @@ import {
   Label,
   Input,
   ListButton,
-  BlockFooter
-} from 'framework7-react';
+  BlockFooter,
+} from "framework7-react";
 
-import routes from '../routes';
+import routes from "../routes";
 
 export default () => {
-
   // Framework7 parameters here
   const f7params = {
-    id: 'io.framework7.testapp', // App bundle ID
-    name: 'Framework7', // App name
-    theme: 'auto', // Automatic theme detection
+    id: "io.framework7.testapp", // App bundle ID
+    name: "Framework7", // App name
+    theme: "auto", // Automatic theme detection
     // App routes
     routes,
   };
@@ -37,30 +36,34 @@ export default () => {
     <App params={f7params}>
       {/* Statusbar */}
       <Statusbar />
+      {/* Right Panel */}
+      <Panel left reveal themeDark>
+        <View url="/panel-right/" />
+      </Panel>
 
       {/* Left Panel */}
-      <Panel left cover themeDark>
+      <Panel right cover themeDark>
         <View url="/panel-left/" />
       </Panel>
 
-      {/* Right Panel */}
-      <Panel right reveal themeDark>
-        <View url="/panel-right/"/>
-      </Panel>
-
       {/* Main View */}
-      <View id="main-view" url="/" main className="ios-edges"/>
+      <View id="main-view" url="/" main className="ios-edges" />
 
       {/* Popup */}
-      <Popup id="popup">
+      <Popup id="zahir">
         <View>
           <Page>
-            <Navbar title="Popup">
+            <Navbar title="zahir1">
               <NavRight>
                 <Link popupClose>Close</Link>
               </NavRight>
             </Navbar>
-            <Block>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque, architecto. Cupiditate laudantium rem nesciunt numquam, ipsam. Voluptates omnis, a inventore atque ratione aliquam. Omnis iusto nemo quos ullam obcaecati, quod.</Block>
+            <Block>
+              Lorem ipsum dolor sit amet, consectetur adipisicing elit. Neque,
+              architecto. Cupiditate laudantium rem nesciunt numquam, ipsam.
+              Voluptates omnis, a inventore atque ratione aliquam. Omnis iusto
+              nemo quos ullam obcaecati, quod.
+            </Block>
           </Page>
         </View>
       </Popup>
