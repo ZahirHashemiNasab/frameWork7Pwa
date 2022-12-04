@@ -1,14 +1,11 @@
-// Need to use the React-specific entry point to import createApi
-import { createApi } from "@reduxjs/toolkit/query/react";
+import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react";
 import { AxioRequestBaseQuery } from "../requestBaseQuery";
 import * as allUrl from "../url";
 
-let basePath = process.env.REACT_APP_PUBLIC_URL as string;
+const basePath = process.env.REACT_APP_PUBLIC_URL as string;
 export const KbComposition = createApi({
   reducerPath: "composition",
-  baseQuery: AxioRequestBaseQuery({
-    baseUrl: basePath,
-  }),
+  baseQuery: AxioRequestBaseQuery(),
   endpoints: (build) => ({
     getBusinessPerson: build.query({
       query: () => ({

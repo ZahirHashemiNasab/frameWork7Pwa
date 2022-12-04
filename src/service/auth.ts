@@ -1,30 +1,43 @@
 // import Cookies from "universal-cookie";
-import { store } from "../store1/store";
+import { store } from "../store/store";
 import { saveToken } from "../store/profile/profile";
 import { request } from "./request";
-import { getGlobalState } from "../utilities/utilities";
-export const getToken = async (location: any) => {
+import axios from "axios";
+// import { getGlobalState } from "../utilities/utilities";
+export const getToken = async (router: any) => {
+  const { history, navigate } = router;
+  console.log("code ====>>", localStorage.getItem["KB_VERIFIER"]);
   // const cookie = new Cookies();
   const body = new URLSearchParams();
   body.append("grant_type", "authorization_code");
   body.append("redirect_uri", "http://localhost:3000/?redirect");
   body.append("client_id", "kian-business-web");
-  body.append("code_verifier", localStorage.getItem["KB_VERIFIER"]);
+  body.append("code_verifier", String(localStorage.getItem("KB_VERIFIER")));
   body.append(
     "code",
-    location.search.substr(
-      location.search.lastIndexOf("code=") + 5,
-      location.search.length
-    )
+    history[0].substr(history[0].lastIndexOf("code=") + 5, history[0].length)
   );
-  if (!getGlobalState().counter.TOKEN) {
-    return request
+  if (!localStorage.getItem("ACCESS_TOKEN")) {
+    // return request(
+    //   "https://new.uat.neshanid.com/auth/realms/KIAN/protocol/openid-connect/token",
+    //   {
+    //     data: body,
+    //     method: "post",
+    //     headers: {
+    //       "content-type": "application/x-www-form-urlencoded",
+    //       // "Access-Control-Allow-Credentials": "true",
+    //       // "Access-Control-Allow-Origin": "http://localhost:3000",
+    //       // Vary: "Origin",
+    //     },
+    //   }
+
+    return axios
       .post(
         "https://uat.neshanid.com/auth/realms/KIAN/protocol/openid-connect/token",
         body,
         {
           headers: {
-            "content-type": "application/x-www-form-urlencoded;charset=UTF-8",
+            "content-type": "application/x-www-form-urlencoded",
           },
         }
       )
@@ -37,42 +50,9 @@ export const getToken = async (location: any) => {
             refreshToken: resp?.data?.refresh_token,
           })
         );
-
-        // return;
+        router.navigate("/");
       });
   } else return;
-};
-
-export const refreshToken = () => {
-  let headers = {
-    "Content-Type": "application/x-www-form-urlencoded",
-    Accept: "application/json, text/plain, */*",
-    // Authorization: `Bearer ${localStorage.getItem("ACCESS_TOKEN")}`,
-
-    "Application-Name": "KIAN_BUSINESS",
-    // "Accept-Language": "fa",
-    // "Access-Control-Allow-Origin": "*",
-  };
-  const body = new URLSearchParams();
-  body.append("grant_type", "refresh_token");
-  body.append("refresh_token", `${localStorage.getItem("REFRESH_TOKEN")}`);
-  body.append("client_id", "kian-business-web");
-
-  return request
-    .post(
-      "https://uat.neshanid.com/auth/realms/KIAN/protocol/openid-connect/token",
-      body,
-      { headers: headers }
-    )
-    .then((resp: any) => {
-      localStorage.setItem("REFRESH_TOKEN", resp?.data?.refresh_token);
-      localStorage.setItem("ACCESS_TOKEN", resp?.data?.access_token);
-      saveToken({
-        token: resp?.data?.access_token,
-        refreshToken: resp?.data?.refresh_token,
-      });
-    });
-  // .catch((error) => logOut());
 };
 
 function dec2hex(dec: any) {
@@ -131,16 +111,13 @@ export const login = async () => {
 export const logOut = () => {
   // const cookie = new Cookies();
   const body = new URLSearchParams();
-  body.append(
-    "refresh_token",
-    getGlobalState().counter.REFRESH_TOKEN as string
-  );
+  body.append("refresh_token", localStorage.getItem("REFRESH_TOKEN") as string);
   body.append("client_id", "kian-business-web");
 
   const headers = {
     // headers: { Authorization: `Bearer ${cookie.get("ACCESS_TOKEN")}` },
     headers: {
-      Authorization: `Bearer ${getGlobalState().counter.TOKEN}`,
+      Authorization: `Bearer ${localStorage.getItem('"ACCESS_TOKEN"')}`,
       "content-type": "application/x-www-form-urlencoded;charset=UTF-8",
     },
   };

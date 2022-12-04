@@ -1,55 +1,67 @@
 import type { BaseQueryFn } from "@reduxjs/toolkit/query";
 import type { AxiosRequestConfig } from "axios";
-import { store } from "../store1/store";
-import { refreshToken } from "./auth";
+import { store } from "../store/store";
+// import { refreshToken } from "./auth";
 import { request } from "./request";
 import { getGlobalState } from "../utilities/utilities";
+import axios from "axios";
+import { refreshToken } from "./refreshToken";
 export const AxioRequestBaseQuery =
-  (
-    { baseUrl }: { baseUrl: string } = { baseUrl: "" }
-  ): BaseQueryFn<
-    {
-      url: string;
-      method: AxiosRequestConfig["method"];
-      data?: AxiosRequestConfig["data"];
-      params?: AxiosRequestConfig["params"];
-    },
-    unknown,
-    unknown
-  > =>
-  async ({ url, method, data, params }) => {
+  ({ baseUrl }: { baseUrl: string } = { baseUrl: "" }): any =>
+  async ({ url, method, data, params }: any) => {
     let headers = {};
-    if (getGlobalState().counter.TOKEN) {
-      return request({
-        method: method,
-        url: baseUrl + url,
-        data: data,
-        params: params,
-        headers: {
-          ...headers,
-          Authorization: `Bearer ${getGlobalState().counter.TOKEN}`,
-        },
+    console.log(
+      "access token",
+      localStorage.getItem("ACCESS_TOKEN") !== null,
+      localStorage.getItem("ACCESS_TOKEN")
+    );
+    // if (localStorage.getItem("ACCESS_TOKEN") !== null) {
+    console.log("im in the if scop");
+    return request(baseUrl + url, {
+      method: method,
+      data: data,
+      params: params,
+      headers: {
+        ...headers,
+      },
+    })
+      .then((resp: any) => {
+        return { data: resp.data };
       })
-        .then((resp: any) => {
-          return resp;
-        })
-        .catch((error: any) => {
-          refreshToken()
-            .then((resp) => {
-              request({
-                method: method,
-                url: baseUrl + url,
-                data: data,
-                params: params,
-                headers: {
-                  ...headers,
-                  Authorization: `Bearer ${getGlobalState().counter.TOKEN}`,
-                },
-              });
-            })
-            .catch((error) => console.log("get error after refresh token"));
-        });
-    } else {
-      return new Error("null token");
-    }
+      .catch((error: any) => {
+        // refreshToken(
+        //   request(baseUrl + url, {
+        //     method: method,
+        //     data: data,
+        //     params: params,
+        //     headers: {
+        //       ...headers,
+        //     },
+        //   })
+        // )
+        //   .then((resp: any) => {
+        //     data: resp;
+        //   })
+        //   .catch((error: any) => {
+        //     error: error;
+        //   });
+        refreshToken(
+          request(baseUrl + url, {
+            method: method,
+            data: data,
+            params: params,
+            headers: {
+              ...headers,
+            },
+          })
+        );
+        return { error: error };
+      });
+
+    // } else {
+    //   console.log("SHORT CIRCUT");
+    //   return { error: "error" };
+    // }
+
+    // return { data: null };
   };

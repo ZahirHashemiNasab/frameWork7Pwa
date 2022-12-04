@@ -6,6 +6,7 @@ import NotFoundPage from "./components/pages/NotFoundPage";
 import PanelLeftPage from "./components/pages/PanelLeftPage";
 import PanelRightPage from "./components/pages/PanelRightPage";
 import Businesses from "./components/pages/Businesses";
+import LoginPage from "./components/pages/LoginPage";
 
 export default [
   {
@@ -31,6 +32,11 @@ export default [
   {
     path: "/form/",
     component: FormPage,
+  },
+  ,
+  {
+    path: "/login/",
+    component: LoginPage,
   },
   {
     path: "/dynamic-route/blog/:blogId/post/:postId/",

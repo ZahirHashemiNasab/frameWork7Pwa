@@ -1,18 +1,21 @@
 import * as React from "react";
-import { Page, Navbar, Block } from "framework7-react";
+import { Card } from "framework7-react";
 import { useSelector } from "react-redux";
-
+import MainLayout from "../layouts/MainLayout";
+import { useGetBusinessPersonQuery } from "src/service/kb-composition/kb-composition";
 const Businesses = (props: any) => {
-  const state = useSelector((state: any) => state);
-  console.log("bussinesses page", state);
+  const token = useSelector((state: any) => state.counter.TOKEN);
+  const { data, isError, isLoading, isSuccess } = useGetBusinessPersonQuery(
+    // { id: 1 },
+    { skip: !token }
+  );
+  console.log("business", data);
   return (
-    <Page>
-      <Navbar title="Not found" backLink="Back" />
-      <Block strong>
-        <p>businesses</p>
-        <p>there are your related businesses</p>
-      </Block>
-    </Page>
+    <MainLayout>
+      {data?.businesses?.map((element: any, index: any) => (
+        <Card content={element.name} key={index} />
+      ))}
+    </MainLayout>
   );
 };
 

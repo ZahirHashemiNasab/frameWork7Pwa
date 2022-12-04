@@ -22,7 +22,7 @@ import "./css/app.css";
 
 // Init Framework7-React plugin
 Framework7.use(Framework7React);
-import { store } from "./store1/store";
+import { store } from "./store/store";
 import { Provider } from "react-redux";
 
 // Mount React App

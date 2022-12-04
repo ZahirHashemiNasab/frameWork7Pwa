@@ -1,98 +1,228 @@
-import * as React from "react";
-// import { useEffect } from "react";
+import React from "react";
+import { useEffect } from "react";
 import {
   Page,
   Navbar,
-  NavLeft,
-  NavTitle,
-  NavRight,
   Link,
   Toolbar,
   Block,
-  BlockTitle,
-  List,
-  ListItem,
-  Row,
-  Col,
-  Button,
+  Tab,
+  Tabs,
 } from "framework7-react";
-
+import { useSelector } from "react-redux";
+import MainLayout from "../layouts/MainLayout";
+import t from "../../hooks/translate";
 export default (props: any) => {
-  console.log("home page component", props);
-
-  // useEffect(() => {
-  // props?.f7router?.navigate("/hello");
-  // }, []);
-
+  const state: any = useSelector((state: any) => state);
+  useEffect(() => {
+    if (localStorage.getItem("ACCESS_TOKEN") === null) {
+      props?.f7router?.navigate("/login/");
+    }
+  }, []);
   return (
-    <Page>
-      <Navbar>
-        <NavLeft>
-          <Link iconIos="f7:menu" iconMd="material:menu" panelOpen="left" />
-        </NavLeft>
-        <NavTitle>My App</NavTitle>
-        <NavRight>
-          <Link iconIos="f7:menu" iconMd="material:menu" panelOpen="right" />
-        </NavRight>
-      </Navbar>
-      <Toolbar>
-        <Link>Left Link</Link>
-        <Link>Right Link</Link>
-      </Toolbar>
-      <Block strong>
-        <p>Here is your blank Framework7 app. Let's see what we have here.</p>
-      </Block>
-      <BlockTitle>Navigation</BlockTitle>
-      <List>
-        <ListItem link="/about/" title="About" />
-        <ListItem link="/form/" title="Form" />
-      </List>
-      <BlockTitle>Modals</BlockTitle>
-      <Block strong>
-        <Row>
-          <Col width="50">
-            <Button fill raised popupOpen="#zahir">
-              Popup
-            </Button>
-            <button
-              onClick={() =>
-                props.f7router.navigate("/businesses", {
-                  zahir: "test",
-                })
-              }
-            >
-              click
-            </button>
-          </Col>
-          <Col width="50">
-            <Button fill raised loginScreenOpen="#login-screen">
-              Login Screen
-            </Button>
-          </Col>
-        </Row>
-      </Block>
-      <BlockTitle>Panels</BlockTitle>
-      <Block strong>
-        <Row>
-          <Col width="50">
-            <Button fill raised panelOpen="left">
-              Left Panel
-            </Button>
-          </Col>
-          <Col width="50">
-            <Button fill raised panelOpen="right">
-              Right Panel
-            </Button>
-          </Col>
-        </Row>
-      </Block>
-      <List>
-        <ListItem link="/businesses" title="Dynamic Route" />
-        <ListItem
-          link="/load-something-that-doesnt-exist/"
-          title="Default Route (404)"
-        />
-      </List>
+    <Page pageContent={false}>
+      <MainLayout>
+        <Navbar title={t("cartable")}></Navbar>
+
+        <Toolbar tabbar labels position={"top"}>
+          <Link
+            tabLink="#tab-1"
+            tabLinkActive
+            text={
+              <p
+                style={{
+                  fontSize: "16px",
+                  fontWeight: "bold",
+                  margin: "0px",
+                  fontFamily: "iranYekan",
+                }}
+              >
+                {t("waitting_for_you")}
+              </p>
+            }
+          ></Link>
+          <Link
+            tabLink="#tab-2"
+            text={
+              <p
+                style={{
+                  fontSize: "16px",
+                  fontWeight: "bold",
+                  margin: "0px",
+                  fontFamily: "iranYekan",
+                }}
+              >
+                {t("waitting_for_other")}
+              </p>
+            }
+          ></Link>
+          <Link
+            tabLink="#tab-3"
+            text={
+              <p
+                style={{
+                  fontSize: "14px",
+                  fontWeight: "bold",
+                  margin: "0px",
+                  fontFamily: "iranYekan",
+                }}
+              >
+                {t("execution_status")}
+              </p>
+            }
+            // iconIos="f7:cloud_upload_fill"
+            // iconAurora="f7:cloud_upload_fill"
+            // iconMd="material:file_upload"
+          ></Link>
+        </Toolbar>
+
+        <Tabs>
+          <Tab id="tab-1" className="page-content" tabActive>
+            <Block>
+              <p>Tab 1 content</p>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam
+                enim quia molestiae facilis laudantium voluptates obcaecati
+                officia cum, sit libero commodi. Ratione illo suscipit
+                temporibus sequi iure ad laboriosam accusamus?
+              </p>
+              <p>
+                Saepe explicabo voluptas ducimus provident, doloremque quo totam
+                molestias! Suscipit blanditiis eaque exercitationem praesentium
+                reprehenderit, fuga accusamus possimus sed, sint facilis ratione
+                quod, qui dignissimos voluptas! Aliquam rerum consequuntur
+                deleniti.
+              </p>
+              <p>
+                Totam reprehenderit amet commodi ipsum nam provident doloremque
+                possimus odio itaque, est animi culpa modi consequatur
+                reiciendis corporis libero laudantium sed eveniet unde delectus
+                a maiores nihil dolores? Natus, perferendis.
+              </p>
+              <p>
+                Atque quis totam repellendus omnis alias magnam corrupti,
+                possimus aspernatur perspiciatis quae provident consequatur
+                minima doloremque blanditiis nihil maxime ducimus earum autem.
+                Magni animi blanditiis similique iusto, repellat sed quisquam!
+              </p>
+              <p>
+                Suscipit, facere quasi atque totam. Repudiandae facilis at optio
+                atque, rem nam, natus ratione cum enim voluptatem suscipit
+                veniam! Repellat, est debitis. Modi nam mollitia explicabo, unde
+                aliquid impedit! Adipisci!
+              </p>
+              <p>
+                Deserunt adipisci tempora asperiores, quo, nisi ex delectus
+                vitae consectetur iste fugiat iusto dolorem autem. Itaque, ipsa
+                voluptas, a assumenda rem, dolorum porro accusantium, officiis
+                veniam nostrum cum cumque impedit.
+              </p>
+              <p>
+                Laborum illum ipsa voluptatibus possimus nesciunt ex consequatur
+                rem, natus ad praesentium rerum libero consectetur temporibus
+                cupiditate atque aspernatur, eaque provident eligendi quaerat ea
+                soluta doloremque. Iure fugit, minima facere.
+              </p>
+            </Block>
+          </Tab>
+          <Tab id="tab-2" className="page-content">
+            <Block>
+              <p>Tab 2 content</p>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam
+                enim quia molestiae facilis laudantium voluptates obcaecati
+                officia cum, sit libero commodi. Ratione illo suscipit
+                temporibus sequi iure ad laboriosam accusamus?
+              </p>
+              <p>
+                Saepe explicabo voluptas ducimus provident, doloremque quo totam
+                molestias! Suscipit blanditiis eaque exercitationem praesentium
+                reprehenderit, fuga accusamus possimus sed, sint facilis ratione
+                quod, qui dignissimos voluptas! Aliquam rerum consequuntur
+                deleniti.
+              </p>
+              <p>
+                Totam reprehenderit amet commodi ipsum nam provident doloremque
+                possimus odio itaque, est animi culpa modi consequatur
+                reiciendis corporis libero laudantium sed eveniet unde delectus
+                a maiores nihil dolores? Natus, perferendis.
+              </p>
+              <p>
+                Atque quis totam repellendus omnis alias magnam corrupti,
+                possimus aspernatur perspiciatis quae provident consequatur
+                minima doloremque blanditiis nihil maxime ducimus earum autem.
+                Magni animi blanditiis similique iusto, repellat sed quisquam!
+              </p>
+              <p>
+                Suscipit, facere quasi atque totam. Repudiandae facilis at optio
+                atque, rem nam, natus ratione cum enim voluptatem suscipit
+                veniam! Repellat, est debitis. Modi nam mollitia explicabo, unde
+                aliquid impedit! Adipisci!
+              </p>
+              <p>
+                Deserunt adipisci tempora asperiores, quo, nisi ex delectus
+                vitae consectetur iste fugiat iusto dolorem autem. Itaque, ipsa
+                voluptas, a assumenda rem, dolorum porro accusantium, officiis
+                veniam nostrum cum cumque impedit.
+              </p>
+              <p>
+                Laborum illum ipsa voluptatibus possimus nesciunt ex consequatur
+                rem, natus ad praesentium rerum libero consectetur temporibus
+                cupiditate atque aspernatur, eaque provident eligendi quaerat ea
+                soluta doloremque. Iure fugit, minima facere.
+              </p>
+            </Block>
+          </Tab>
+          <Tab id="tab-3" className="page-content">
+            <Block>
+              <p>Tab 3 content</p>
+              <p>
+                Lorem ipsum dolor sit amet, consectetur adipisicing elit. Ullam
+                enim quia molestiae facilis laudantium voluptates obcaecati
+                officia cum, sit libero commodi. Ratione illo suscipit
+                temporibus sequi iure ad laboriosam accusamus?
+              </p>
+              <p>
+                Saepe explicabo voluptas ducimus provident, doloremque quo totam
+                molestias! Suscipit blanditiis eaque exercitationem praesentium
+                reprehenderit, fuga accusamus possimus sed, sint facilis ratione
+                quod, qui dignissimos voluptas! Aliquam rerum consequuntur
+                deleniti.
+              </p>
+              <p>
+                Totam reprehenderit amet commodi ipsum nam provident doloremque
+                possimus odio itaque, est animi culpa modi consequatur
+                reiciendis corporis libero laudantium sed eveniet unde delectus
+                a maiores nihil dolores? Natus, perferendis.
+              </p>
+              <p>
+                Atque quis totam repellendus omnis alias magnam corrupti,
+                possimus aspernatur perspiciatis quae provident consequatur
+                minima doloremque blanditiis nihil maxime ducimus earum autem.
+                Magni animi blanditiis similique iusto, repellat sed quisquam!
+              </p>
+              <p>
+                Suscipit, facere quasi atque totam. Repudiandae facilis at optio
+                atque, rem nam, natus ratione cum enim voluptatem suscipit
+                veniam! Repellat, est debitis. Modi nam mollitia explicabo, unde
+                aliquid impedit! Adipisci!
+              </p>
+              <p>
+                Deserunt adipisci tempora asperiores, quo, nisi ex delectus
+                vitae consectetur iste fugiat iusto dolorem autem. Itaque, ipsa
+                voluptas, a assumenda rem, dolorum porro accusantium, officiis
+                veniam nostrum cum cumque impedit.
+              </p>
+              <p>
+                Laborum illum ipsa voluptatibus possimus nesciunt ex consequatur
+                rem, natus ad praesentium rerum libero consectetur temporibus
+                cupiditate atque aspernatur, eaque provident eligendi quaerat ea
+                soluta doloremque. Iure fugit, minima facere.
+              </p>
+            </Block>
+          </Tab>
+        </Tabs>
+      </MainLayout>
     </Page>
   );
 };
