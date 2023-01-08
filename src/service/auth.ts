@@ -6,7 +6,6 @@ import axios from "axios";
 // import { getGlobalState } from "../utilities/utilities";
 export const getToken = async (router: any) => {
   const { history, navigate } = router;
-  console.log("code ====>>", localStorage.getItem["KB_VERIFIER"]);
   // const cookie = new Cookies();
   const body = new URLSearchParams();
   body.append("grant_type", "authorization_code");

@@ -10,13 +10,7 @@ export const AxioRequestBaseQuery =
   ({ baseUrl }: { baseUrl: string } = { baseUrl: "" }): any =>
   async ({ url, method, data, params }: any) => {
     let headers = {};
-    console.log(
-      "access token",
-      localStorage.getItem("ACCESS_TOKEN") !== null,
-      localStorage.getItem("ACCESS_TOKEN")
-    );
     // if (localStorage.getItem("ACCESS_TOKEN") !== null) {
-    console.log("im in the if scop");
     return request(baseUrl + url, {
       method: method,
       data: data,
@@ -57,11 +51,4 @@ export const AxioRequestBaseQuery =
         );
         return { error: error };
       });
-
-    // } else {
-    //   console.log("SHORT CIRCUT");
-    //   return { error: "error" };
-    // }
-
-    // return { data: null };
   };

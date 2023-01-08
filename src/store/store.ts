@@ -2,6 +2,7 @@ import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import counterReducer from "./profile/profile";
 import settingReducer from "./generalSetting/generalSetting";
 import { KbComposition } from "../service/kb-composition/kb-composition";
+import { KbKartable } from "../service/kb-kartable/kb-kartable";
 import { persistStore, persistReducer } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 // import { PersistGate } from "redux-persist/integration/react";
@@ -16,6 +17,7 @@ const reducer = combineReducers({
   counter: counterReducer,
   setting: settingReducer,
   [KbComposition?.reducerPath]: KbComposition?.reducer,
+  [KbKartable?.reducerPath]: KbKartable?.reducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, reducer);
@@ -24,7 +26,9 @@ export const store = configureStore({
   middleware: (getDefaultMiddleware) =>
     getDefaultMiddleware({
       serializableCheck: false,
-    }).concat(KbComposition.middleware),
+    })
+      .concat(KbComposition.middleware)
+      .concat(KbKartable.middleware),
 });
 
 export const persistor = persistStore(store);

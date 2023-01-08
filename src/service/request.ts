@@ -25,10 +25,11 @@ request.interceptors.response.use(
     return response;
   },
   function (error) {
+    console.log("error", error.response.status);
+    if (error.response.status == "401") {
+      localStorage.removeItem("ACCESS_TOKEN");
+      localStorage.removeItem("REFRESH_TOKEN");
+    }
     return Promise.reject(error);
   }
 );
-
-//   console.log("request", asyncRequest);
-//   return asyncRequest;
-// };
